@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Application Email</title>
+  </head>
+  <body
+    style="
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #333;
+    "
+  >
+    <div>
+      <!-- Greeting -->
+      <p><%= emailBody.greeting %></p>
+
+      <!-- Introduction -->
+      <p><%= emailBody.introduction %></p>
+
+      <!-- Technical Skills -->
+      <p><strong>Technical Skills:</strong> <%= emailBody.technicalSkills %></p>
+
+      <!-- Projects -->
+      <% if (emailBody.projects && emailBody.projects.length > 0) { %>
+      <div style="margin-top: 16px">
+        <strong>Projects:</strong>
+        <% emailBody.projects.forEach(function(proj) { %>
+        <p style="margin: 4px 0"><strong><%= proj.name %></strong></p>
+        <p style="margin: 4px 0"><%= proj.description %></p>
+        <% if (proj.links && Array.isArray(proj.links) && proj.links.length > 0) { %>
+        <ul>
+          <% proj.links.forEach(function(link) { %>
+          <li><a href="<%= link.url %>" target="_blank"><%= link.name || link.type || 'Link' %></a></li>
+          <% }); %>
+        </ul>
+        <% } else { %>
+        <!-- DEBUG: Links data: <%= JSON.stringify(proj.links) %> -->
+        <% } %> <% }); %>
+      </div>
+      <% } %>
+
+      <!-- Experience -->
+      <% if (emailBody.experience && emailBody.experience.length > 0) { %>
+      <div style="margin-top: 16px">
+        <strong>Work Experience:</strong>
+        <% emailBody.experience.forEach(function(exp) { %>
+        <p style="margin: 4px 0">
+          <strong><%= exp.role %></strong> at <%= exp.company %> (<%=
+          exp.duration %>)
+        </p>
+        <% if (exp.description) { %>
+        <p style="margin: 4px 0"><%= exp.description %></p>
+        <% } %> <% }); %>
+      </div>
+      <% } %>
+
+      <p style="margin-top: 16px">
+        <%= emailBody.fitInterestAndWillingnessToLearn %>
+      </p>
+
+      <!-- Closing -->
+      <p style="margin-top: 20px"><%= emailBody.closing %></p>
+
+      <!-- Contact Info -->
+      <div style="margin-top: 12px">
+        <p><strong>Email:</strong> <%= emailBody.myEmail %></p>
+        <p><strong>Phone:</strong> <%= emailBody.phone %></p>
+
+        <!-- Social Links -->
+        <% if (emailBody.attachementsAndLinks &&
+        emailBody.attachementsAndLinks.length > 0) { %>
+        <div style="margin-top: 16px">
+          <strong>Social Links:</strong>
+          <% emailBody.attachementsAndLinks.forEach(function(link) { %>
+          <p style="margin: 4px 0">
+            <strong><%= link.type %>:</strong>
+            <a href="<%= link.url %>" target="_blank" style="color: #2563eb">
+              <%= link.url %>
+            </a>
+          </p>
+          <% }); %>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>
